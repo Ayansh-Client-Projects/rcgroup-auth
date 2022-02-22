@@ -1,16 +1,21 @@
+import { SalesmanDto } from './dto/salesman.dto';
 import { UserInterface } from './../user.interface';
-import { CustomerDto } from './dto/customer.dto';
 import { Injectable } from '@nestjs/common';
-import { CompanyTypeEnum } from '../enum/company-type.enum';
 
-const mockCustomerDto: CustomerDto = {
+const mockSalesmanDto: SalesmanDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
   fullName: 'Aman Lodha',
-  companyName: 'Embrays Technologies',
-  companyType: CompanyTypeEnum.PRIVATE_LIMITED,
-  gstNumber: 'KAAAAAA0000A1Z5',
+  email: 'info@embraystechnologies.com',
+  panNumber: 'AAAAA0000A',
   aadhaarNumber: '222222222222',
-  email: 'aman@embraystechnologies.com',
+  bankDetails: {
+    id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
+    accountHolderName: 'Aman Lodha',
+    ifscCode: '465786345',
+    accountNumber: 85768957498,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
   address: {
     id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
     line1: '6041, Tower 6, Prestige Bagamane Temple Bells',
@@ -28,11 +33,8 @@ const mockCustomerDto: CustomerDto = {
 };
 
 @Injectable()
-export class CustomerService implements UserInterface {
-  updateUser() {
-    throw new Error('Method not implemented.');
-  }
-  getUser(): CustomerDto {
-    return mockCustomerDto;
+export class SalesmanService implements UserInterface {
+  getUser(): SalesmanDto {
+    return mockSalesmanDto;
   }
 }

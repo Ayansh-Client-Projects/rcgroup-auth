@@ -1,28 +1,10 @@
-import { AddressDto } from './../../dto/user-address.dto';
+import { UserDto } from './../../dto/user.dto';
 import { aadhaarRegex } from './../../user.regex';
 import { CompanyTypeEnum } from './../../enum/company-type.enum';
-import {
-  IsNotEmpty,
-  IsString,
-  IsUUID,
-  IsEnum,
-  Matches,
-  IsEmail,
-  IsNotEmptyObject,
-  ValidateNested,
-} from 'class-validator';
+import { IsNotEmpty, IsString, IsEnum, Matches } from 'class-validator';
 import { gstRegex } from '../../user.regex';
-import { Type } from 'class-transformer';
 
-export class CustomerDto {
-  @IsNotEmpty()
-  @IsUUID()
-  id: string;
-
-  @IsNotEmpty()
-  @IsString()
-  fullName: string;
-
+export class CustomerDto extends UserDto {
   @IsNotEmpty()
   @IsString()
   companyName: string;
@@ -38,13 +20,4 @@ export class CustomerDto {
   @IsNotEmpty()
   @Matches(aadhaarRegex)
   aadhaarNumber: string;
-
-  @IsNotEmpty()
-  @IsEmail()
-  email: string;
-
-  @IsNotEmptyObject()
-  @ValidateNested()
-  @Type(() => AddressDto)
-  address: AddressDto;
 }
