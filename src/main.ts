@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import * as Firebase from 'firebase-admin';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { AppModule } from './app.module';
@@ -10,6 +10,13 @@ const logger: Logger = new Logger('Main');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      validateCustomDecorators: true,
+    }),
+  );
   const configService = app.get(ConfigService);
 
   Firebase.initializeApp({
