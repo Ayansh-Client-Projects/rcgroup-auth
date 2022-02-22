@@ -27,9 +27,8 @@ export class UserController {
   }
 
   @Get('/enterprise/:id')
-  @UserTypes(UserTypeEnum.ADMIN, UserTypeEnum.STAFF)
+  @UserTypes(UserTypeEnum.ADMIN)
   getAdminEnterprise(@Param() idDto: IdDto): AdminEnterpriseDto {
-    // TODO this is admin & staff feature hence create a common service - enterpriseService which is used by both admin & staff service
     return this.adminService.getAdminEnterprise(idDto.id);
   }
 }
