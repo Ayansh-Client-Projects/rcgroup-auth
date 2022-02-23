@@ -15,6 +15,10 @@ export class UserService {
     return this.userHelperService.getUserService().getUser();
   }
 
+  getUserById(id: string): User {
+    return this.userHelperService.getUserService().getUserById(id);
+  }
+
   getEnterprise(id: string): EnterpriseDto {
     return this.enterpriseService.getEnterprise(
       id,

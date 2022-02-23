@@ -1,6 +1,6 @@
 import { SalesmanDto } from './dto/salesman.dto';
 import { UserInterface } from './../user.interface';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 const mockSalesmanDto: SalesmanDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
@@ -36,5 +36,11 @@ const mockSalesmanDto: SalesmanDto = {
 export class SalesmanService implements UserInterface {
   getUser(): SalesmanDto {
     return mockSalesmanDto;
+  }
+  getUserById(id: string): SalesmanDto {
+    if (mockSalesmanDto.id === id) {
+      return mockSalesmanDto;
+    }
+    throw new NotFoundException();
   }
 }

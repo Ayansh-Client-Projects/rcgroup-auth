@@ -1,5 +1,5 @@
 import { UserInterface } from './../user.interface';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AdminDto } from './dto/admin.dto';
 
 const mockAdminDto: AdminDto = {
@@ -25,5 +25,11 @@ const mockAdminDto: AdminDto = {
 export class AdminService implements UserInterface {
   getUser(): AdminDto {
     return mockAdminDto;
+  }
+  getUserById(id: string): AdminDto {
+    if (mockAdminDto.id === id) {
+      return mockAdminDto;
+    }
+    throw new NotFoundException();
   }
 }

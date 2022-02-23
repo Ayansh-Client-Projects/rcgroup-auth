@@ -1,6 +1,6 @@
 import { UserInterface } from './../user.interface';
 import { CustomerDto } from './dto/customer.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CompanyTypeEnum } from '../enum/company-type.enum';
 
 const mockCustomerDto: CustomerDto = {
@@ -29,10 +29,13 @@ const mockCustomerDto: CustomerDto = {
 
 @Injectable()
 export class CustomerService implements UserInterface {
-  updateUser() {
-    throw new Error('Method not implemented.');
-  }
   getUser(): CustomerDto {
     return mockCustomerDto;
+  }
+  getUserById(id: string): CustomerDto {
+    if (mockCustomerDto.id === id) {
+      return mockCustomerDto;
+    }
+    throw new NotFoundException();
   }
 }
