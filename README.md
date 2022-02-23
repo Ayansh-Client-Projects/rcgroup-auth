@@ -7,6 +7,11 @@
 5. Remove user.service.ts, move use of Request object to controller as much as possible
 6. User's email will also be managed by Firebase hence do not update the same via backend
 7. User's mobile number & email id should be taken from auth user (DecodedIdToken) and not stored on our system
+8. Internally user https://www.npmjs.com/package/class-validator as much as possible
+9. DTO handling https://stackoverflow.com/questions/59547243/create-dtos-bos-and-daos-for-nestjs-rest-api
+10. NestJS https://www.youtube.com/watch?v=t7XBaTlA9fI&list=PLIGDNOJWiL1_YrquGbDDN4BNNRy678Spr&index=44
+11. TypeORM https://github.com/typeorm/typeorm/blob/master/docs/listeners-and-subscribers.md
+12. TypeORM category relation https://typeorm.io/#/tree-entities/closure-table
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
