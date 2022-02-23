@@ -25,7 +25,7 @@ async function bootstrap() {
         EnvironmentVariablesEnum.FIREBASE_PROJECT_ID,
       ),
       clientEmail: configService.get(
-        EnvironmentVariablesEnum.FIREBASE_PROJECT_ID,
+        EnvironmentVariablesEnum.FIREBASE_CLIENT_EMAIL,
       ),
       privateKey: configService.get(
         EnvironmentVariablesEnum.FIREBASE_PRIVATE_KEY,

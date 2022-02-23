@@ -1,8 +1,8 @@
 import { UserHelperService } from './user-helper.service';
-import { Injectable, Scope } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { User } from '../user.type';
 
-@Injectable({ scope: Scope.REQUEST })
+@Injectable()
 export class UserService {
   constructor(private readonly userHelperService: UserHelperService) {}
 

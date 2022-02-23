@@ -37,6 +37,15 @@ export class UserController {
     return this.userService.getUserById(idDto.id);
   }
 
+  @Patch('/userType')
+  @UserTypes(
+    UserTypeEnum.ADMIN,
+    UserTypeEnum.CUSTOMER,
+    UserTypeEnum.SALESMAN,
+    UserTypeEnum.STAFF,
+  )
+  setUserType() {}
+
   @Patch('/')
   @UserTypes(
     UserTypeEnum.ADMIN,

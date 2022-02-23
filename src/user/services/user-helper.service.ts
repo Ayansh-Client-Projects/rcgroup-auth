@@ -1,5 +1,5 @@
 import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Scope } from '@nestjs/common';
 import { SalesmanService } from '../salesman/salesman.service';
 import { StaffService } from '../staff/staff.service';
 import { AdminService } from '../admin/admin.service';
@@ -10,7 +10,7 @@ import { UserTypeEnum } from '../../auth/enum/user-type.enum';
 import { Constants } from '../../app.constants';
 import { UserInterface } from '../user.interface';
 
-@Injectable()
+@Injectable({ scope: Scope.REQUEST })
 export class UserHelperService {
   constructor(
     @Inject(REQUEST) private readonly request: Request,
@@ -32,6 +32,7 @@ export class UserHelperService {
   }
 
   getUserService(): UserInterface {
+    console.log({ userType: this.getUserType() });
     switch (this.getUserType()) {
       case UserTypeEnum.ADMIN:
         return this.adminService;
