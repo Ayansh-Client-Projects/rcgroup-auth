@@ -43,4 +43,21 @@ export class StaffService implements UserInterface {
     }
     throw new NotFoundException();
   }
+  updateUser(staffDto: StaffDto): StaffDto {
+    if (staffDto.id !== mockStaffDto.id) {
+      throw new NotFoundException();
+    }
+
+    // TODO also check if this is the logged in user itself
+
+    mockStaffDto.aadhaarNumber = staffDto.aadhaarNumber;
+    mockStaffDto.address = staffDto.address;
+    mockStaffDto.bankDetails = staffDto.bankDetails;
+    mockStaffDto.email = staffDto.email;
+    mockStaffDto.fullName = staffDto.fullName;
+    mockStaffDto.panNumber = staffDto.panNumber;
+    mockStaffDto.updatedAt = new Date();
+
+    return mockStaffDto;
+  }
 }

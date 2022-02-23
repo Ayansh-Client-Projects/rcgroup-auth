@@ -10,7 +10,7 @@ export class UserTypeGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const allowedUserTypes = this.reflector.get<UserTypeEnum[]>(
-      [Constants.USER_TYPE_PLURAL_LABEL],
+      [Constants.USER_TYPE_PLURAL_KEY],
       context.getHandler(),
     );
     if (!allowedUserTypes) {

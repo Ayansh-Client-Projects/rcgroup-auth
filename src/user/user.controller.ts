@@ -37,6 +37,17 @@ export class UserController {
     return this.userService.getUserById(idDto.id);
   }
 
+  @Patch('/')
+  @UserTypes(
+    UserTypeEnum.ADMIN,
+    UserTypeEnum.CUSTOMER,
+    UserTypeEnum.SALESMAN,
+    UserTypeEnum.STAFF,
+  )
+  updateUser(@Body() user: User): User {
+    return this.userService.updateUser(user);
+  }
+
   @Get('/enterprises')
   @UserTypes(UserTypeEnum.ADMIN, UserTypeEnum.STAFF)
   getAllEnterprises(): Array<StaffEnterpriseDto> {

@@ -1,3 +1,4 @@
+import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
 import { Inject, Injectable } from '@nestjs/common';
 import { SalesmanService } from '../salesman/salesman.service';
 import { StaffService } from '../staff/staff.service';
@@ -21,8 +22,13 @@ export class UserHelperService {
 
   getUserType(): UserTypeEnum {
     return UserTypeEnum[
-      this.request[Constants.USER_KEY][Constants.USER_TYPE_PLURAL_LABEL]
+      this.request[Constants.USER_KEY][Constants.USER_TYPE_KEY]
     ];
+  }
+
+  getUserAuthId(): string {
+    const user: DecodedIdToken = this.request[Constants.USER_KEY];
+    return user.uid;
   }
 
   getUserService(): UserInterface {

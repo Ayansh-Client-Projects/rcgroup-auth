@@ -13,4 +13,8 @@ export class UserService {
   getUserById(id: string): User {
     return this.userHelperService.getUserService().getUserById(id);
   }
+
+  updateUser(user: User): User {
+    return this.userHelperService.getUserService().updateUser(user);
+  }
 }

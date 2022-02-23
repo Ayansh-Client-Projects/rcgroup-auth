@@ -32,4 +32,16 @@ export class AdminService implements UserInterface {
     }
     throw new NotFoundException();
   }
+  updateUser(adminDto: AdminDto): AdminDto {
+    if (adminDto.id !== mockAdminDto.id) {
+      throw new NotFoundException();
+    }
+
+    mockAdminDto.address = adminDto.address;
+    mockAdminDto.email = adminDto.email;
+    mockAdminDto.fullName = adminDto.fullName;
+    mockAdminDto.updatedAt = new Date();
+
+    return adminDto;
+  }
 }

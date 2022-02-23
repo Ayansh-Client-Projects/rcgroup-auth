@@ -43,4 +43,21 @@ export class SalesmanService implements UserInterface {
     }
     throw new NotFoundException();
   }
+  updateUser(salesmanDto: SalesmanDto): SalesmanDto {
+    if (mockSalesmanDto.id !== salesmanDto.id) {
+      throw new NotFoundException();
+    }
+
+    // TODO also check if this is the logged in user itself
+
+    mockSalesmanDto.aadhaarNumber = salesmanDto.aadhaarNumber;
+    mockSalesmanDto.address = salesmanDto.address;
+    mockSalesmanDto.bankDetails = salesmanDto.bankDetails;
+    mockSalesmanDto.email = salesmanDto.email;
+    mockSalesmanDto.fullName = salesmanDto.fullName;
+    mockSalesmanDto.panNumber = salesmanDto.panNumber;
+    mockSalesmanDto.updatedAt = new Date();
+
+    return mockSalesmanDto;
+  }
 }

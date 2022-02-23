@@ -38,4 +38,20 @@ export class CustomerService implements UserInterface {
     }
     throw new NotFoundException();
   }
+  updateUser(customerDto: CustomerDto): CustomerDto {
+    if (mockCustomerDto.id !== customerDto.id) {
+      throw new NotFoundException();
+    }
+
+    mockCustomerDto.aadhaarNumber = customerDto.aadhaarNumber;
+    mockCustomerDto.address = customerDto.address;
+    mockCustomerDto.companyName = customerDto.companyName;
+    mockCustomerDto.companyType = customerDto.companyType;
+    mockCustomerDto.email = customerDto.email;
+    mockCustomerDto.fullName = customerDto.fullName;
+    mockCustomerDto.gstNumber = customerDto.gstNumber;
+    mockCustomerDto.updatedAt = new Date();
+
+    return mockCustomerDto;
+  }
 }
