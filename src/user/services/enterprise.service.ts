@@ -1,3 +1,4 @@
+import { UserHelperService } from './user-helper.service';
 import { UserTypeEnum } from './../../auth/enum/user-type.enum';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { AdminEnterpriseDto, StaffEnterpriseDto } from '../dto/enterprise.dto';
@@ -32,7 +33,10 @@ const mockStaffEnterpriseDto: StaffEnterpriseDto = {
 
 @Injectable()
 export class EnterpriseService {
-  getEnterprise(id: string, userType: UserTypeEnum) {
+  constructor(private readonly userHelperService: UserHelperService) {}
+
+  getEnterprise(id: string) {
+    const userType = this.userHelperService.getUserType();
     if (userType === UserTypeEnum.ADMIN) {
       return this.getAdminEnterprise(id);
     }
@@ -40,6 +44,24 @@ export class EnterpriseService {
       return this.getStaffEnterprise(id);
     }
     throw new Error();
+  }
+
+  updateEnterprise(adminEnterpriseDto: AdminEnterpriseDto): AdminEnterpriseDto {
+    if (mockAdminEnterpriseDto.id !== adminEnterpriseDto.id) {
+      throw new NotFoundException();
+    }
+    mockAdminEnterpriseDto.bankDetails = adminEnterpriseDto.bankDetails;
+    mockAdminEnterpriseDto.companyName = adminEnterpriseDto.companyName;
+    mockAdminEnterpriseDto.gstNumber = adminEnterpriseDto.gstNumber;
+    mockAdminEnterpriseDto.companyType = adminEnterpriseDto.companyType;
+    mockAdminEnterpriseDto.isDefault = adminEnterpriseDto.isDefault;
+    mockAdminEnterpriseDto.updatedAt = new Date();
+
+    mockStaffEnterpriseDto.companyName = adminEnterpriseDto.companyName;
+    mockStaffEnterpriseDto.companyType = adminEnterpriseDto.companyType;
+    mockStaffEnterpriseDto.isDefault = adminEnterpriseDto.isDefault;
+
+    return mockAdminEnterpriseDto;
   }
 
   private getAdminEnterprise(id: string): AdminEnterpriseDto {

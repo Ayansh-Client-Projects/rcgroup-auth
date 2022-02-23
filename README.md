@@ -2,6 +2,8 @@
 ## TODOs
 1. Logger implementation
 2. Add more validations (regex, min, max, minLength, maxLength, etc)
+3. Better errors
+4. Remove user.service.ts, move use of Request object to controller as much as possible
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
