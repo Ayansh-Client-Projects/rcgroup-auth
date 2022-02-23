@@ -1,15 +1,19 @@
-import { EnterpriseDto } from './dto/enterprise.dto';
+import { EnterpriseDto, StaffEnterpriseDto } from './dto/enterprise.dto';
 import { IdDto } from './dto/id.dto';
 import { UserService } from './services/user.service';
 import { UserTypeEnum } from './../auth/enum/user-type.enum';
 import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { UserTypes } from '../decorators/user-types.decorator';
 import { UserTypeGuard } from '../guards/user-type.guard';
+import { EnterpriseService } from './services/enterprise.service';
 
 @Controller('user')
 @UseGuards(UserTypeGuard)
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly enterpriseService: EnterpriseService,
+  ) {}
 
   @Get('/')
   @UserTypes(
@@ -22,8 +26,14 @@ export class UserController {
     return this.userService.getUser();
   }
 
-  @Get('/enterprise/:id')
-  @UserTypes(UserTypeEnum.ADMIN)
+  @Get('/enterprises')
+  @UserTypes(UserTypeEnum.ADMIN, UserTypeEnum.STAFF)
+  getAllEnterprises(): Array<StaffEnterpriseDto> {
+    return this.enterpriseService.getAllEnterprises();
+  }
+
+  @Get('/enterprises/:id')
+  @UserTypes(UserTypeEnum.ADMIN, UserTypeEnum.STAFF)
   getEnterprise(@Param() idDto: IdDto): EnterpriseDto {
     return this.userService.getEnterprise(idDto.id);
   }

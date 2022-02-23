@@ -41,16 +41,22 @@ export class EnterpriseService {
     }
     throw new Error();
   }
+
   private getAdminEnterprise(id: string): AdminEnterpriseDto {
     if (id === mockAdminEnterpriseDto.id) {
       return mockAdminEnterpriseDto;
     }
     throw new NotFoundException('No enterprise available with this id');
   }
+
   private getStaffEnterprise(id: string): StaffEnterpriseDto {
     if (id === mockStaffEnterpriseDto.id) {
       return mockStaffEnterpriseDto;
     }
     throw new NotFoundException('No enterprise available with this id');
+  }
+
+  getAllEnterprises(): Array<StaffEnterpriseDto> {
+    return [mockStaffEnterpriseDto, mockStaffEnterpriseDto];
   }
 }
