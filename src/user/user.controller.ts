@@ -1,3 +1,4 @@
+import { UserHelperService } from './services/user-helper.service';
 import {
   AdminEnterpriseDto,
   EnterpriseDto,
@@ -11,12 +12,16 @@ import { UserTypes } from '../decorators/user-types.decorator';
 import { UserTypeGuard } from '../guards/user-type.guard';
 import { EnterpriseService } from './services/enterprise.service';
 import { User } from './user.type';
+import { AuthService } from '../auth/services/auth.service';
+import { SetUserTypeDto } from './dto/set-user-type.dto';
 
 @Controller('user')
 @UseGuards(UserTypeGuard)
 export class UserController {
   constructor(
     private readonly userService: UserService,
+    private readonly authService: AuthService,
+    private readonly userHelperService: UserHelperService,
     private readonly enterpriseService: EnterpriseService,
   ) {}
 
@@ -38,13 +43,12 @@ export class UserController {
   }
 
   @Patch('/userType')
-  @UserTypes(
-    UserTypeEnum.ADMIN,
-    UserTypeEnum.CUSTOMER,
-    UserTypeEnum.SALESMAN,
-    UserTypeEnum.STAFF,
-  )
-  setUserType() {}
+  async setUserType(@Body() setUserTypeDto: SetUserTypeDto): Promise<void> {
+    await this.authService.addUserTypeClaim(
+      this.userHelperService.getUserAuthId(),
+      setUserTypeDto.userType,
+    );
+  }
 
   @Patch('/')
   @UserTypes(

@@ -31,15 +31,18 @@ export class AuthService {
     if (user == null) {
       throw new UserDoesNotExistError();
     }
+
     // if user type is null or undefined
     // https://stackoverflow.com/questions/2647867/how-can-i-determine-if-a-variable-is-undefined-or-null
-    if (user?.customClaims?.[Constants.USER_TYPE_KEY] == null) {
+    if (user?.customClaims?.[Constants.USER_TYPE_KEY] !== undefined) {
       // throw error user already has userType assigned
       throw new UserTypeAlreadySet();
     }
-    return this.firebaseService.addCustomClaims(uid, {
+    await this.firebaseService.addCustomClaims(uid, {
       ...(user?.customClaims ?? {}),
       userType,
     });
+
+    return this.firebaseService.invalidateSessionsForUser(uid);
   }
 }

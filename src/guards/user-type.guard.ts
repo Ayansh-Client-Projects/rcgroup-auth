@@ -10,18 +10,20 @@ export class UserTypeGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const allowedUserTypes = this.reflector.get<UserTypeEnum[]>(
-      [Constants.USER_TYPE_PLURAL_KEY],
+      Constants.USER_TYPE_PLURAL_KEY,
       context.getHandler(),
     );
+    console.log({ allowedUserTypes });
     if (!allowedUserTypes) {
       return true;
     }
     const request: Request = context.switchToHttp().getRequest();
     const user = request[Constants.USER_KEY];
+    console.log({ user });
     return (
       user &&
       UserTypeEnum[user[Constants.USER_TYPE_KEY]] &&
-      allowedUserTypes.includes(user.role)
+      allowedUserTypes.includes(user[Constants.USER_TYPE_KEY])
     );
   }
 }

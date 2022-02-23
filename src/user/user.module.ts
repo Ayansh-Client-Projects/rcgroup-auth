@@ -1,3 +1,5 @@
+import { FirebaseService } from './../auth/services/firebase.service';
+import { AuthService } from './../auth/services/auth.service';
 import { Module } from '@nestjs/common';
 import { CustomerService } from './customer/customer.service';
 import { UserController } from './user.controller';
@@ -10,6 +12,8 @@ import { UserHelperService } from './services/user-helper.service';
 
 @Module({
   providers: [
+    AuthService,
+    FirebaseService,
     CustomerService,
     UserService,
     SalesmanService,
