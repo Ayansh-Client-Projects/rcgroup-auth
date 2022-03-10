@@ -1,4 +1,4 @@
-import { AdminEntity } from './../entity/admin.entity';
+import { AdminEntity } from '../entity/admin.entity';
 import { EntityRepository, Repository } from 'typeorm';
 
 @EntityRepository(AdminEntity)

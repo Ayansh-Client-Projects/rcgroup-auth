@@ -1,6 +1,6 @@
-import { UserInterface } from './../user.interface';
+import { UserInterface } from '../user.interface';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AdminDto } from './dto/admin.dto';
+import { AdminDto } from '../dto/admin.dto';
 
 const mockAdminDto: AdminDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',

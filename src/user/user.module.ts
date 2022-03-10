@@ -10,11 +10,11 @@ import { UserController } from './user.controller';
 import { UserService } from './services/user.service';
 import { SalesmanService } from './salesman/salesman.service';
 import { StaffService } from './staff/staff.service';
-import { AdminService } from './admin/admin.service';
+import { AdminService } from './services/admin.service';
 import { EnterpriseService } from './services/enterprise.service';
 import { UserHelperService } from './services/user-helper.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AdminRepository } from './admin/repository/admin.repository';
+import { AdminRepository } from './repository/admin.repository';
 import { StaffRepository } from './staff/repository/staff.repository';
 
 @Module({
