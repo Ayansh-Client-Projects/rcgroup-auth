@@ -9,6 +9,6 @@ export class BankDetailsEntity extends BaseEntity {
   @Column({ name: 'ifsc_code' })
   ifscCode: string;
 
-  @Column({ name: 'account_number' })
+  @Column({ name: 'account_number', unique: true })
   accountNumber: number;
 }

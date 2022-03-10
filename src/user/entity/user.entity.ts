@@ -3,7 +3,7 @@ import { Column, JoinColumn, OneToOne } from 'typeorm';
 import { BaseEntity } from './base.entity';
 
 export abstract class UserEntity extends BaseEntity {
-  @Column({ name: 'auth_id' })
+  @Column({ name: 'auth_id', unique: true })
   authId: string;
 
   @Column({ name: 'full_name' })

@@ -19,7 +19,7 @@ export abstract class BaseEntity {
     name: 'updated_at',
     type: 'timestamp with time zone',
     default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)', // TODO check if this is working
   })
   public updatedAt: Date;
 }

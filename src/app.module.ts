@@ -24,6 +24,7 @@ import { UserModule } from './user/user.module';
           username: configService.get(EnvironmentVariablesEnum.DB_USERNAME),
           password: configService.get(EnvironmentVariablesEnum.DB_PASSWORD),
           database: configService.get(EnvironmentVariablesEnum.DB_DATABASE),
+          schema: configService.get(EnvironmentVariablesEnum.DB_SCHEMA),
         };
       },
     }),

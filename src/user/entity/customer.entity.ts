@@ -10,9 +10,9 @@ export class CustomerEntity extends UserEntity {
   @Column({ name: 'company_type', type: 'varchar' })
   companyType: CompanyTypeEnum;
 
-  @Column({ name: 'gst_number' })
+  @Column({ name: 'gst_number', unique: true })
   gstNumber: string;
 
-  @Column({ name: 'aadhaar_number' })
+  @Column({ name: 'aadhaar_number', unique: true })
   aadhaarNumber: string;
 }

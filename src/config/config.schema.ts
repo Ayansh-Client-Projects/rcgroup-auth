@@ -14,4 +14,5 @@ export const configValidationSchema = Joi.object({
   [EnvironmentVariablesEnum.DB_USERNAME]: Joi.string().required(),
   [EnvironmentVariablesEnum.DB_PASSWORD]: Joi.string().required(),
   [EnvironmentVariablesEnum.DB_DATABASE]: Joi.string().required(),
+  [EnvironmentVariablesEnum.DB_SCHEMA]: Joi.string().required(),
 });

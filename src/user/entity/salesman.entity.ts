@@ -4,10 +4,10 @@ import { UserEntity } from './user.entity';
 
 @Entity('salesman')
 export class SalesmanEntity extends UserEntity {
-  @Column({ name: 'pan_number' })
+  @Column({ name: 'pan_number', unique: true })
   panNumber: string;
 
-  @Column({ name: 'aadhaar_number' })
+  @Column({ name: 'aadhaar_number', unique: true })
   aadhaarNumber: string;
 
   @Column({ name: 'bank_details_id' })
