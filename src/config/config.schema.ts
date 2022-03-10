@@ -9,4 +9,9 @@ export const configValidationSchema = Joi.object({
   [EnvironmentVariablesEnum.FIREBASE_CLIENT_EMAIL]: Joi.string()
     .email()
     .required(),
+  [EnvironmentVariablesEnum.DB_HOST]: Joi.string().required(),
+  [EnvironmentVariablesEnum.DB_PORT]: Joi.number().required(),
+  [EnvironmentVariablesEnum.DB_USERNAME]: Joi.string().required(),
+  [EnvironmentVariablesEnum.DB_PASSWORD]: Joi.string().required(),
+  [EnvironmentVariablesEnum.DB_DATABASE]: Joi.string().required(),
 });

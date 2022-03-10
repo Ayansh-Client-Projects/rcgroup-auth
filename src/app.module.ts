@@ -1,14 +1,32 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from './auth/auth.module';
 import { configValidationSchema } from './config/config.schema';
+import { EnvironmentVariablesEnum } from './config/environment-variables.enum';
 import { AuthMiddleware } from './middleware/auth.middleware';
 import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     AuthModule,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          type: 'postgres',
+          autoLoadEntities: true,
+          synchronize: true,
+          host: configService.get(EnvironmentVariablesEnum.DB_HOST),
+          port: configService.get(EnvironmentVariablesEnum.DB_PORT),
+          username: configService.get(EnvironmentVariablesEnum.DB_USERNAME),
+          password: configService.get(EnvironmentVariablesEnum.DB_PASSWORD),
+          database: configService.get(EnvironmentVariablesEnum.DB_DATABASE),
+        };
+      },
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       cache: true,
