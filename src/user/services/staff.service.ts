@@ -1,5 +1,5 @@
-import { StaffDto } from './dto/staff.dto';
-import { UserInterface } from './../user.interface';
+import { StaffDto } from '../dto/staff.dto';
+import { UserInterface } from '../user.interface';
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 const mockStaffDto: StaffDto = {
