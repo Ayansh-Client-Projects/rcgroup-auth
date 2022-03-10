@@ -1,6 +1,6 @@
-import { BankDetailsEntity } from './../../entity/bank-details.entity';
+import { BankDetailsEntity } from './bank-details.entity';
 import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
-import { UserEntity } from '../../entity/user.entity';
+import { UserEntity } from './user.entity';
 
 @Entity('salesman')
 export class SalesmanEntity extends UserEntity {

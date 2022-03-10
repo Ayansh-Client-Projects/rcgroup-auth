@@ -1,4 +1,4 @@
-import { BankDetailsDto } from './../../dto/bank-details.dto';
+import { BankDetailsDto } from './bank-details.dto';
 import { Type } from 'class-transformer';
 import {
   IsNotEmpty,
@@ -6,7 +6,7 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { UserDto } from './../../dto/user.dto';
+import { UserDto } from './user.dto';
 
 export class SalesmanDto extends UserDto {
   @IsNotEmpty()

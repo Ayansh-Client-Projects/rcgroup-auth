@@ -1,6 +1,6 @@
 import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
 import { Inject, Injectable, Scope } from '@nestjs/common';
-import { SalesmanService } from '../salesman/salesman.service';
+import { SalesmanService } from './salesman.service';
 import { StaffService } from '../staff/staff.service';
 import { AdminService } from './admin.service';
 import { CustomerService } from './customer.service';
