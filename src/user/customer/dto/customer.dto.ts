@@ -11,7 +11,7 @@ export class CustomerDto extends UserDto {
 
   @IsNotEmpty()
   @IsEnum(CompanyTypeEnum)
-  companyType: string;
+  companyType: CompanyTypeEnum;
 
   @IsNotEmpty()
   @Matches(gstRegex)

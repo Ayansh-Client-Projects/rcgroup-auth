@@ -1,3 +1,4 @@
+import { CustomerRepository } from './customer/repository/customer.repository';
 import { AddressRepository } from './repository/address.repository';
 import { FirebaseService } from './../auth/services/firebase.service';
 import { AuthService } from './../auth/services/auth.service';
@@ -25,7 +26,13 @@ import { AdminRepository } from './admin/repository/admin.repository';
     EnterpriseService,
     UserHelperService,
   ],
-  imports: [TypeOrmModule.forFeature([AdminRepository, AddressRepository])],
+  imports: [
+    TypeOrmModule.forFeature([
+      AdminRepository,
+      CustomerRepository,
+      AddressRepository,
+    ]),
+  ],
   controllers: [UserController],
 })
 export class UserModule {}
