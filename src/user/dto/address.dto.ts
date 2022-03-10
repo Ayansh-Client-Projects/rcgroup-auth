@@ -37,7 +37,7 @@ export class AddressDto {
   @IsNotEmpty()
   @IsNumber()
   @Min(1)
-  @Max(12)
+  @Max(999999)
   @Type(() => Number)
   pincode: number;
 

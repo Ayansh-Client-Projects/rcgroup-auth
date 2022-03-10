@@ -1,3 +1,4 @@
+import { AddressRepository } from './repository/address.repository';
 import { FirebaseService } from './../auth/services/firebase.service';
 import { AuthService } from './../auth/services/auth.service';
 import { Module } from '@nestjs/common';
@@ -9,6 +10,8 @@ import { StaffService } from './staff/staff.service';
 import { AdminService } from './admin/admin.service';
 import { EnterpriseService } from './services/enterprise.service';
 import { UserHelperService } from './services/user-helper.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AdminRepository } from './admin/repository/admin.repository';
 
 @Module({
   providers: [
@@ -22,6 +25,7 @@ import { UserHelperService } from './services/user-helper.service';
     EnterpriseService,
     UserHelperService,
   ],
+  imports: [TypeOrmModule.forFeature([AdminRepository, AddressRepository])],
   controllers: [UserController],
 })
 export class UserModule {}

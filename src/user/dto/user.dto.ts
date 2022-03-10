@@ -7,7 +7,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { BaseDto } from '../../dto/base.dto';
-import { AddressDto } from './user-address.dto';
+import { AddressDto } from './address.dto';
 export class UserDto extends BaseDto {
   @IsNotEmpty()
   @IsString()
