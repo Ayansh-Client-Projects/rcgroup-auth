@@ -1,3 +1,5 @@
+import { BankDetailsRepository } from './repository/bank-details.repository';
+import { SalesmanRepository } from './salesman/repository/salesman.repository';
 import { CustomerRepository } from './customer/repository/customer.repository';
 import { AddressRepository } from './repository/address.repository';
 import { FirebaseService } from './../auth/services/firebase.service';
@@ -13,6 +15,7 @@ import { EnterpriseService } from './services/enterprise.service';
 import { UserHelperService } from './services/user-helper.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminRepository } from './admin/repository/admin.repository';
+import { StaffRepository } from './staff/repository/staff.repository';
 
 @Module({
   providers: [
@@ -30,6 +33,9 @@ import { AdminRepository } from './admin/repository/admin.repository';
     TypeOrmModule.forFeature([
       AdminRepository,
       CustomerRepository,
+      SalesmanRepository,
+      StaffRepository,
+      BankDetailsRepository,
       AddressRepository,
     ]),
   ],
