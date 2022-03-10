@@ -1,11 +1,11 @@
 import { BankDetailsRepository } from './repository/bank-details.repository';
 import { SalesmanRepository } from './salesman/repository/salesman.repository';
-import { CustomerRepository } from './customer/repository/customer.repository';
+import { CustomerRepository } from './repository/customer.repository';
 import { AddressRepository } from './repository/address.repository';
 import { FirebaseService } from './../auth/services/firebase.service';
 import { AuthService } from './../auth/services/auth.service';
 import { Module } from '@nestjs/common';
-import { CustomerService } from './customer/customer.service';
+import { CustomerService } from './services/customer.service';
 import { UserController } from './user.controller';
 import { UserService } from './services/user.service';
 import { SalesmanService } from './salesman/salesman.service';

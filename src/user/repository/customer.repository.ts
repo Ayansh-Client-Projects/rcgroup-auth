@@ -1,4 +1,4 @@
-import { CustomerEntity } from './../entity/customer.entity';
+import { CustomerEntity } from '../entity/customer.entity';
 import { EntityRepository, Repository } from 'typeorm';
 
 @EntityRepository(CustomerEntity)

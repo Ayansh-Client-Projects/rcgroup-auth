@@ -1,5 +1,5 @@
-import { UserInterface } from './../user.interface';
-import { CustomerDto } from './dto/customer.dto';
+import { UserInterface } from '../user.interface';
+import { CustomerDto } from '../dto/customer.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CompanyTypeEnum } from '../enum/company-type.enum';
 

@@ -1,6 +1,6 @@
 import { Column, Entity } from 'typeorm';
-import { UserEntity } from '../../entity/user.entity';
-import { CompanyTypeEnum } from '../../enum/company-type.enum';
+import { UserEntity } from './user.entity';
+import { CompanyTypeEnum } from '../enum/company-type.enum';
 
 @Entity('customer')
 export class CustomerEntity extends UserEntity {
