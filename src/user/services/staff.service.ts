@@ -34,7 +34,7 @@ const mockStaffDto: StaffDto = {
 
 @Injectable()
 export class StaffService implements UserInterface {
-  getUser(): StaffDto {
+  getUserByAuthId(authId: string): StaffDto {
     return mockStaffDto;
   }
   getUserById(id: string): StaffDto {

@@ -29,7 +29,7 @@ const mockCustomerDto: CustomerDto = {
 
 @Injectable()
 export class CustomerService implements UserInterface {
-  getUser(): CustomerDto {
+  getUserByAuthId(authId: string): CustomerDto {
     return mockCustomerDto;
   }
   getUserById(id: string): CustomerDto {

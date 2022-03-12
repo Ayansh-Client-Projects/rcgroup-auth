@@ -2,23 +2,22 @@ import { Constants } from '../app.constants';
 import { UserTypeEnum } from '../auth/enum/user-type.enum';
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Request } from 'express';
+import { asyncLocalStorage } from '../utils/async-local-storage';
 
 @Injectable()
 export class UserTypeGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
-  canActivate(context: ExecutionContext): boolean {
+  canActivate(executionContext: ExecutionContext): boolean {
     const allowedUserTypes = this.reflector.get<UserTypeEnum[]>(
       Constants.USER_TYPE_PLURAL_KEY,
-      context.getHandler(),
+      executionContext.getHandler(),
     );
     console.log({ allowedUserTypes });
     if (!allowedUserTypes) {
       return true;
     }
-    const request: Request = context.switchToHttp().getRequest();
-    const user = request[Constants.USER_KEY];
+    const user = asyncLocalStorage.getStore()?.get(Constants.USER_KEY);
     console.log({ user });
     return (
       user &&

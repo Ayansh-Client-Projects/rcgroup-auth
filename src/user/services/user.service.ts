@@ -7,7 +7,11 @@ export class UserService {
   constructor(private readonly userHelperService: UserHelperService) {}
 
   getUser(): User {
-    return this.userHelperService.getUserService().getUser();
+    return this.getUserByAuthId(this.userHelperService.getUserAuthId());
+  }
+
+  getUserByAuthId(authId: string): User {
+    return this.userHelperService.getUserService().getUserByAuthId(authId);
   }
 
   getUserById(id: string): User {

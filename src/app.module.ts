@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { configValidationSchema } from './config/config.schema';
 import { EnvironmentVariablesEnum } from './config/environment-variables.enum';
 import { AuthMiddleware } from './middleware/auth.middleware';
+import { CorrelationIdMiddleware } from './middleware/correlation-id.middleware';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -42,6 +43,6 @@ import { UserModule } from './user/user.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('/');
+    consumer.apply(CorrelationIdMiddleware, AuthMiddleware).forRoutes('/');
   }
 }

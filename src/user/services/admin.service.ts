@@ -23,7 +23,7 @@ const mockAdminDto: AdminDto = {
 };
 @Injectable()
 export class AdminService implements UserInterface {
-  getUser(): AdminDto {
+  getUserByAuthId(authId: string): AdminDto {
     return mockAdminDto;
   }
   getUserById(id: string): AdminDto {

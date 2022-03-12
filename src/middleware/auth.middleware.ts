@@ -3,13 +3,17 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
+  Logger,
   NestMiddleware,
 } from '@nestjs/common';
 import { Constants } from '../app.constants';
 import { NextFunction } from 'express';
+import { asyncLocalStorage } from '../utils/async-local-storage';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
+  private readonly logger = new Logger(AuthMiddleware.name);
+
   constructor(private readonly authService: AuthService) {}
 
   public async use(req: Request, _: Response, next: NextFunction) {
@@ -23,12 +27,11 @@ export class AuthMiddleware implements NestMiddleware {
 
     const { error, data: user } = await this.authService.getDecodedToken(token);
     if (error) {
-      // TODO log error
-      console.error(error);
-      throw new InternalServerErrorException();
+      this.logger.error(error);
+      throw new InternalServerErrorException(error);
     }
-    req[Constants.USER_KEY] = user!;
-    console.log({ user });
+    asyncLocalStorage.getStore()?.set(Constants.USER_KEY, user);
+    this.logger.debug({ user });
 
     next();
   }

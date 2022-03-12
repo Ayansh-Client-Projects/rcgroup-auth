@@ -1,19 +1,17 @@
 import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
-import { Inject, Injectable, Scope } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { SalesmanService } from './salesman.service';
 import { StaffService } from './staff.service';
 import { AdminService } from './admin.service';
 import { CustomerService } from './customer.service';
-import { Request } from 'express';
-import { REQUEST } from '@nestjs/core';
 import { UserTypeEnum } from '../../auth/enum/user-type.enum';
 import { Constants } from '../../app.constants';
 import { UserInterface } from '../user.interface';
+import { asyncLocalStorage } from '../../utils/async-local-storage';
 
-@Injectable({ scope: Scope.REQUEST })
+@Injectable()
 export class UserHelperService {
   constructor(
-    @Inject(REQUEST) private readonly request: Request,
     private readonly customerService: CustomerService,
     private readonly adminService: AdminService,
     private readonly staffService: StaffService,
@@ -22,12 +20,16 @@ export class UserHelperService {
 
   getUserType(): UserTypeEnum {
     return UserTypeEnum[
-      this.request[Constants.USER_KEY][Constants.USER_TYPE_KEY]
+      asyncLocalStorage.getStore()?.get(Constants.USER_KEY)[
+        Constants.USER_TYPE_KEY
+      ]
     ];
   }
 
   getUserAuthId(): string {
-    const user: DecodedIdToken = this.request[Constants.USER_KEY];
+    const user: DecodedIdToken = asyncLocalStorage
+      .getStore()
+      ?.get(Constants.USER_KEY);
     return user.uid;
   }
 
