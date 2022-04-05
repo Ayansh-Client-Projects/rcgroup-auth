@@ -1,4 +1,3 @@
-import { UserHelperService } from './services/user-helper.service';
 import {
   AdminEnterpriseDto,
   EnterpriseDto,
@@ -11,9 +10,10 @@ import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
 import { UserTypes } from '../decorators/user-types.decorator';
 import { UserTypeGuard } from '../guards/user-type.guard';
 import { EnterpriseService } from './services/enterprise.service';
-import { User } from './user.type';
+import { UserDto } from './user.type';
 import { AuthService } from '../auth/services/auth.service';
 import { SetUserTypeDto } from './dto/set-user-type.dto';
+import { getUserAuthId } from './utils/user.util';
 
 @Controller('user')
 @UseGuards(UserTypeGuard)
@@ -21,7 +21,6 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,
-    private readonly userHelperService: UserHelperService,
     private readonly enterpriseService: EnterpriseService,
   ) {}
 
@@ -32,20 +31,20 @@ export class UserController {
     UserTypeEnum.SALESMAN,
     UserTypeEnum.STAFF,
   )
-  getUser(): User {
+  getUser(): Promise<UserDto> {
     return this.userService.getUser();
   }
 
   @Get('/:id')
   @UserTypes(UserTypeEnum.ADMIN, UserTypeEnum.SALESMAN, UserTypeEnum.STAFF)
-  getUserById(@Param() idDto: IdDto): User {
+  getUserById(@Param() idDto: IdDto): Promise<UserDto> {
     return this.userService.getUserById(idDto.id);
   }
 
   @Patch('/userType')
   async setUserType(@Body() setUserTypeDto: SetUserTypeDto): Promise<void> {
     await this.authService.addUserTypeClaim(
-      this.userHelperService.getUserAuthId(),
+      getUserAuthId(),
       setUserTypeDto.userType,
     );
   }
@@ -57,7 +56,7 @@ export class UserController {
     UserTypeEnum.SALESMAN,
     UserTypeEnum.STAFF,
   )
-  updateUser(@Body() user: User): User {
+  updateUser(@Body() user: UserDto): Promise<UserDto> {
     return this.userService.updateUser(user);
   }
 

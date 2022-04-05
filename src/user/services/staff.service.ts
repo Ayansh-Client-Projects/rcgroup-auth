@@ -1,6 +1,8 @@
 import { StaffDto } from '../dto/staff.dto';
 import { UserInterface } from '../user.interface';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { StaffEntity } from '../entity/staff.entity';
+import { FindConditions } from 'typeorm';
 
 const mockStaffDto: StaffDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
@@ -33,17 +35,19 @@ const mockStaffDto: StaffDto = {
 };
 
 @Injectable()
-export class StaffService implements UserInterface {
-  getUserByAuthId(authId: string): StaffDto {
-    return mockStaffDto;
+export class StaffService implements UserInterface<StaffEntity, StaffDto> {
+  getUserByAuthId(authId: string): Promise<StaffDto> {
+    return Promise.resolve(mockStaffDto);
   }
-  getUserById(id: string): StaffDto {
+
+  getUserById(id: string): Promise<StaffDto> {
     if (mockStaffDto.id === id) {
-      return mockStaffDto;
+      return Promise.resolve(mockStaffDto);
     }
     throw new NotFoundException();
   }
-  updateUser(staffDto: StaffDto): StaffDto {
+
+  updateUser(staffDto: StaffDto): Promise<StaffDto> {
     if (staffDto.id !== mockStaffDto.id) {
       throw new NotFoundException();
     }
@@ -58,6 +62,10 @@ export class StaffService implements UserInterface {
     mockStaffDto.panNumber = staffDto.panNumber;
     mockStaffDto.updatedAt = new Date();
 
-    return mockStaffDto;
+    return Promise.resolve(mockStaffDto);
+  }
+
+  getUser(condition: FindConditions<StaffEntity>): Promise<StaffEntity> {
+    throw new Error('Method not implemented.');
   }
 }

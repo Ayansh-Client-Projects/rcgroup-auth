@@ -1,24 +1,25 @@
 import { UserHelperService } from './user-helper.service';
 import { Injectable } from '@nestjs/common';
-import { User } from '../user.type';
+import { UserDto } from '../user.type';
+import { getUserAuthId } from '../utils/user.util';
 
 @Injectable()
 export class UserService {
   constructor(private readonly userHelperService: UserHelperService) {}
 
-  getUser(): User {
-    return this.getUserByAuthId(this.userHelperService.getUserAuthId());
+  getUser(): Promise<UserDto> {
+    return this.getUserByAuthId(getUserAuthId());
   }
 
-  getUserByAuthId(authId: string): User {
+  getUserByAuthId(authId: string): Promise<UserDto> {
     return this.userHelperService.getUserService().getUserByAuthId(authId);
   }
 
-  getUserById(id: string): User {
+  getUserById(id: string): Promise<UserDto> {
     return this.userHelperService.getUserService().getUserById(id);
   }
 
-  updateUser(user: User): User {
+  updateUser(user: UserDto): Promise<UserDto> {
     return this.userHelperService.getUserService().updateUser(user);
   }
 }

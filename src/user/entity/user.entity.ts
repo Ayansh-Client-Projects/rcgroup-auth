@@ -9,15 +9,13 @@ export abstract class UserEntity extends BaseEntity {
   @Column({ name: 'full_name' })
   fullName: string;
 
-  // @Column({ name: 'email' })
-  // email: string;
-
   @Column({ name: 'address_id' })
   addressId: string;
 
   @OneToOne(() => AddressEntity, {
     nullable: false,
     eager: true,
+    cascade: true,
   })
   @JoinColumn({ name: 'address_id' })
   address: AddressEntity;

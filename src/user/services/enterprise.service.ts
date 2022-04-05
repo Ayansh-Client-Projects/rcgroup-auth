@@ -1,8 +1,8 @@
-import { UserHelperService } from './user-helper.service';
 import { UserTypeEnum } from './../../auth/enum/user-type.enum';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { AdminEnterpriseDto, StaffEnterpriseDto } from '../dto/enterprise.dto';
 import { CompanyTypeEnum } from '../enum/company-type.enum';
+import { getUserType } from '../utils/user.util';
 
 const mockAdminEnterpriseDto: AdminEnterpriseDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
@@ -33,10 +33,8 @@ const mockStaffEnterpriseDto: StaffEnterpriseDto = {
 
 @Injectable()
 export class EnterpriseService {
-  constructor(private readonly userHelperService: UserHelperService) {}
-
   getEnterprise(id: string) {
-    const userType = this.userHelperService.getUserType();
+    const userType = getUserType();
     if (userType === UserTypeEnum.ADMIN) {
       return this.getAdminEnterprise(id);
     }

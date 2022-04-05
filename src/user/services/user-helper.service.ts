@@ -1,13 +1,13 @@
-import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
+import { UserDto } from './../dto/user.dto';
 import { Injectable } from '@nestjs/common';
 import { SalesmanService } from './salesman.service';
 import { StaffService } from './staff.service';
 import { AdminService } from './admin.service';
 import { CustomerService } from './customer.service';
 import { UserTypeEnum } from '../../auth/enum/user-type.enum';
-import { Constants } from '../../app.constants';
 import { UserInterface } from '../user.interface';
-import { asyncLocalStorage } from '../../utils/async-local-storage';
+import { UserEntity } from '../entity/user.entity';
+import { getUserType } from '../utils/user.util';
 
 @Injectable()
 export class UserHelperService {
@@ -18,24 +18,9 @@ export class UserHelperService {
     private readonly salesmanService: SalesmanService,
   ) {}
 
-  getUserType(): UserTypeEnum {
-    return UserTypeEnum[
-      asyncLocalStorage.getStore()?.get(Constants.USER_KEY)[
-        Constants.USER_TYPE_KEY
-      ]
-    ];
-  }
-
-  getUserAuthId(): string {
-    const user: DecodedIdToken = asyncLocalStorage
-      .getStore()
-      ?.get(Constants.USER_KEY);
-    return user.uid;
-  }
-
-  getUserService(): UserInterface {
-    console.log({ userType: this.getUserType() });
-    switch (this.getUserType()) {
+  getUserService(): UserInterface<UserEntity, UserDto> {
+    console.log({ userType: getUserType() });
+    switch (getUserType()) {
       case UserTypeEnum.ADMIN:
         return this.adminService;
       case UserTypeEnum.CUSTOMER:
@@ -45,12 +30,5 @@ export class UserHelperService {
       case UserTypeEnum.STAFF:
         return this.staffService;
     }
-  }
-
-  isAdminOrStaffUserType(): boolean {
-    return (
-      this.getUserType() === UserTypeEnum.ADMIN ||
-      this.getUserType() === UserTypeEnum.STAFF
-    );
   }
 }

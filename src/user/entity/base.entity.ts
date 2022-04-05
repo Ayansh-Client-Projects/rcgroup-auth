@@ -11,6 +11,7 @@ export abstract class BaseEntity {
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp with time zone',
+    update: false,
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
   public createdAt: Date;

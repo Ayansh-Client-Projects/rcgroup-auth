@@ -1,3 +1,5 @@
+import { AddressBuilder } from './builder/address.builder';
+import { AdminBuilder } from './builder/admin.builder';
 import { BankDetailsRepository } from './repository/bank-details.repository';
 import { SalesmanRepository } from './repository/salesman.repository';
 import { CustomerRepository } from './repository/customer.repository';
@@ -28,6 +30,8 @@ import { StaffRepository } from './repository/staff.repository';
     AdminService,
     EnterpriseService,
     UserHelperService,
+    AdminBuilder,
+    AddressBuilder,
   ],
   imports: [
     TypeOrmModule.forFeature([

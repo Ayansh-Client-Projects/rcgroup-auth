@@ -1,6 +1,8 @@
 import { SalesmanDto } from '../dto/salesman.dto';
 import { UserInterface } from '../user.interface';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { SalesmanEntity } from '../entity/salesman.entity';
+import { FindConditions } from 'typeorm';
 
 const mockSalesmanDto: SalesmanDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
@@ -33,17 +35,21 @@ const mockSalesmanDto: SalesmanDto = {
 };
 
 @Injectable()
-export class SalesmanService implements UserInterface {
-  getUserByAuthId(authId: string): SalesmanDto {
-    return mockSalesmanDto;
+export class SalesmanService
+  implements UserInterface<SalesmanEntity, SalesmanDto>
+{
+  getUserByAuthId(authId: string): Promise<SalesmanDto> {
+    return Promise.resolve(mockSalesmanDto);
   }
-  getUserById(id: string): SalesmanDto {
+
+  getUserById(id: string): Promise<SalesmanDto> {
     if (mockSalesmanDto.id === id) {
-      return mockSalesmanDto;
+      return Promise.resolve(mockSalesmanDto);
     }
     throw new NotFoundException();
   }
-  updateUser(salesmanDto: SalesmanDto): SalesmanDto {
+
+  updateUser(salesmanDto: SalesmanDto): Promise<SalesmanDto> {
     if (mockSalesmanDto.id !== salesmanDto.id) {
       throw new NotFoundException();
     }
@@ -58,6 +64,10 @@ export class SalesmanService implements UserInterface {
     mockSalesmanDto.panNumber = salesmanDto.panNumber;
     mockSalesmanDto.updatedAt = new Date();
 
-    return mockSalesmanDto;
+    return Promise.resolve(mockSalesmanDto);
+  }
+
+  getUser(condition: FindConditions<SalesmanEntity>): Promise<SalesmanEntity> {
+    throw new Error('Method not implemented.');
   }
 }

@@ -2,6 +2,8 @@ import { UserInterface } from '../user.interface';
 import { CustomerDto } from '../dto/customer.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CompanyTypeEnum } from '../enum/company-type.enum';
+import { CustomerEntity } from '../entity/customer.entity';
+import { FindConditions } from 'typeorm';
 
 const mockCustomerDto: CustomerDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
@@ -28,17 +30,21 @@ const mockCustomerDto: CustomerDto = {
 };
 
 @Injectable()
-export class CustomerService implements UserInterface {
-  getUserByAuthId(authId: string): CustomerDto {
-    return mockCustomerDto;
+export class CustomerService
+  implements UserInterface<CustomerEntity, CustomerDto>
+{
+  getUserByAuthId(authId: string): Promise<CustomerDto> {
+    return Promise.resolve(mockCustomerDto);
   }
-  getUserById(id: string): CustomerDto {
+
+  getUserById(id: string): Promise<CustomerDto> {
     if (mockCustomerDto.id === id) {
-      return mockCustomerDto;
+      return Promise.resolve(mockCustomerDto);
     }
     throw new NotFoundException();
   }
-  updateUser(customerDto: CustomerDto): CustomerDto {
+
+  updateUser(customerDto: CustomerDto): Promise<CustomerDto> {
     if (mockCustomerDto.id !== customerDto.id) {
       throw new NotFoundException();
     }
@@ -52,6 +58,10 @@ export class CustomerService implements UserInterface {
     mockCustomerDto.gstNumber = customerDto.gstNumber;
     mockCustomerDto.updatedAt = new Date();
 
-    return mockCustomerDto;
+    return Promise.resolve(mockCustomerDto);
+  }
+
+  getUser(condition: FindConditions<CustomerEntity>): Promise<CustomerEntity> {
+    throw new Error('Method not implemented.');
   }
 }
