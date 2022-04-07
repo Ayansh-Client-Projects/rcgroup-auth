@@ -1,3 +1,4 @@
+import { CorrelationIdInResponseHeadersInterceptor } from './interceptor/correlation-id-in-response-headers.interceptor';
 import { NestFactory } from '@nestjs/core';
 import * as Firebase from 'firebase-admin';
 import { Logger, ValidationPipe } from '@nestjs/common';
@@ -5,6 +6,7 @@ import { ConfigService } from '@nestjs/config';
 
 import { AppModule } from './app.module';
 import { EnvironmentVariablesEnum } from './config/environment-variables.enum';
+import { HttpExceptionFilter } from './filters/exception.filter';
 
 const logger: Logger = new Logger('Main');
 
@@ -17,6 +19,10 @@ async function bootstrap() {
       validateCustomDecorators: true,
     }),
   );
+
+  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalInterceptors(new CorrelationIdInResponseHeadersInterceptor());
+
   const configService = app.get(ConfigService);
 
   Firebase.initializeApp({

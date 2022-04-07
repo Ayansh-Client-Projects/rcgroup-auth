@@ -1,8 +1,8 @@
+import { getAslValue } from './../utils/async-local-storage';
 import { Constants } from '../app.constants';
 import { UserTypeEnum } from '../auth/enum/user-type.enum';
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { asyncLocalStorage } from '../utils/async-local-storage';
 
 @Injectable()
 export class UserTypeGuard implements CanActivate {
@@ -17,7 +17,7 @@ export class UserTypeGuard implements CanActivate {
     if (!allowedUserTypes) {
       return true;
     }
-    const user = asyncLocalStorage.getStore()?.get(Constants.USER_KEY);
+    const user = getAslValue(Constants.USER_KEY);
     console.log({ user });
     return (
       user &&

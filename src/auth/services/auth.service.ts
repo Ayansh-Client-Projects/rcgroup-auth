@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserRecord } from 'firebase-admin/lib/auth/user-record';
 
 import { HandledPromise } from '../../utils/handle-promise';
 import { UserTypeEnum } from '../enum/user-type.enum';
 import { FirebaseService } from './firebase.service';
-import { UserDoesNotExistError } from '../errors/user-does-not-exist';
-import { UserTypeAlreadySet } from '../errors/user-type-already-set';
 import { Constants } from '../../app.constants';
 
 @Injectable()
@@ -29,14 +31,14 @@ export class AuthService {
       throw error;
     }
     if (user == null) {
-      throw new UserDoesNotExistError();
+      throw new NotFoundException('User does not exist');
     }
 
     // if user type is null or undefined
     // https://stackoverflow.com/questions/2647867/how-can-i-determine-if-a-variable-is-undefined-or-null
     if (user?.customClaims?.[Constants.USER_TYPE_KEY] !== undefined) {
       // throw error user already has userType assigned
-      throw new UserTypeAlreadySet();
+      throw new ForbiddenException('User type already set');
     }
     await this.firebaseService.addCustomClaims(uid, {
       ...(user?.customClaims ?? {}),
