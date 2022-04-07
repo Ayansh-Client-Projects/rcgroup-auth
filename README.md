@@ -13,6 +13,7 @@
 11. TypeORM https://github.com/typeorm/typeorm/blob/master/docs/listeners-and-subscribers.md
 12. TypeORM category relation https://typeorm.io/#/tree-entities/closure-table
 13. Use strict type in Async Local Storage
+14. Exception Filter for all exceptions
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
