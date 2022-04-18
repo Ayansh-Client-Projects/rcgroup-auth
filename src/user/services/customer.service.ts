@@ -1,9 +1,11 @@
+import { CreateCustomerDto } from './../dto/user-create.dto';
 import { UserInterface } from '../user.interface';
 import { CustomerDto } from '../dto/customer.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CompanyTypeEnum } from '../enum/company-type.enum';
 import { CustomerEntity } from '../entity/customer.entity';
 import { FindConditions } from 'typeorm';
+import { UserTypeEnum } from '../../auth/enum/user-type.enum';
 
 const mockCustomerDto: CustomerDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
@@ -12,6 +14,8 @@ const mockCustomerDto: CustomerDto = {
   companyType: CompanyTypeEnum.PRIVATE_LIMITED,
   gstNumber: 'KAAAAAA0000A1Z5',
   aadhaarNumber: '222222222222',
+  mobileNumber: '919986273519',
+  userType: UserTypeEnum.STAFF,
   email: 'aman@embraystechnologies.com',
   address: {
     id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
@@ -31,8 +35,11 @@ const mockCustomerDto: CustomerDto = {
 
 @Injectable()
 export class CustomerService
-  implements UserInterface<CustomerEntity, CustomerDto>
+  implements UserInterface<CustomerEntity, CustomerDto, CreateCustomerDto>
 {
+  createUser(createUser: CreateCustomerDto): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   getUserByAuthId(authId: string): Promise<CustomerDto> {
     return Promise.resolve(mockCustomerDto);
   }

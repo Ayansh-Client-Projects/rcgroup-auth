@@ -64,7 +64,7 @@ export class UserController {
     UserTypeEnum.SALESMAN,
     UserTypeEnum.STAFF,
   )
-  createUser(@Body() user: any): Promise<UserDto> {
+  createUser(@Body() user: any): Promise<void> {
     return this.userService.createUser(user);
   }
 

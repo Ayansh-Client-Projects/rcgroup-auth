@@ -4,12 +4,20 @@ import { Constants } from '../../app.constants';
 import { UserTypeEnum } from '../../auth/enum/user-type.enum';
 import { getAslValue } from '../../utils/async-local-storage';
 
-export const getUserEmail = (required = true): string | undefined => {
+export const getUserEmail = (): string => {
   const user: DecodedIdToken = getFirebaseUser();
-  if (required && user.email === undefined) {
+  if (user.email === undefined) {
     throw new BadRequestException('User does not have email ID set');
   }
   return user.email;
+};
+
+export const getUserMobileNumber = (): string => {
+  const user: DecodedIdToken = getFirebaseUser();
+  if (user.phone_number === undefined) {
+    throw new BadRequestException('User does not have email ID set');
+  }
+  return user.phone_number;
 };
 
 export const getUserAuthId = (): string => {

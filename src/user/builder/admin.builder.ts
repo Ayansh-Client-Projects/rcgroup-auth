@@ -3,7 +3,11 @@ import { AdminDto } from './../dto/admin.dto';
 import { AdminEntity } from './../entity/admin.entity';
 import { Builder } from './../../builder/builder.interface';
 import { Injectable } from '@nestjs/common';
-import { getUserEmail } from '../utils/user.util';
+import {
+  getUserEmail,
+  getUserMobileNumber,
+  getUserType,
+} from '../utils/user.util';
 
 @Injectable()
 export class AdminBuilder implements Builder<AdminEntity, AdminDto> {
@@ -16,11 +20,14 @@ export class AdminBuilder implements Builder<AdminEntity, AdminDto> {
     adminEntity.address = this.addressBuilder.toEntity(dto.address);
     return adminEntity;
   }
+
   toDto(entity: AdminEntity): AdminDto {
     const adminDto = new AdminDto();
     adminDto.id = entity.id;
     adminDto.fullName = entity.fullName;
-    adminDto.email = getUserEmail() ?? '';
+    adminDto.email = getUserEmail();
+    adminDto.mobileNumber = getUserMobileNumber();
+    adminDto.userType = getUserType();
     adminDto.address = this.addressBuilder.toDto(entity.address);
     adminDto.createdAt = entity.createdAt;
     adminDto.updatedAt = entity.updatedAt;

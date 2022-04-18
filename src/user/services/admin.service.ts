@@ -10,6 +10,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { AdminDto } from '../dto/admin.dto';
 import { FindConditions } from 'typeorm';
 import { Constants } from '../../app.constants';
+import { CreateAdminDto } from '../dto/user-create.dto';
 
 // const mockAdminDto: AdminDto = {
 //   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
@@ -31,13 +32,18 @@ import { Constants } from '../../app.constants';
 //   updatedAt: new Date(),
 // };
 @Injectable()
-export class AdminService implements UserInterface<AdminEntity, AdminDto> {
+export class AdminService
+  implements UserInterface<AdminEntity, AdminDto, CreateAdminDto>
+{
   constructor(
     private readonly adminRepositor: AdminRepository,
     private readonly addressBuilder: AddressBuilder,
     private readonly adminBuilder: AdminBuilder,
     private readonly userCommonService: UserCommonService,
   ) {}
+  createUser(createUser: CreateAdminDto): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
 
   async getUserByAuthId(authId: string): Promise<AdminDto> {
     const adminEntity = await this.getUser({ authId });

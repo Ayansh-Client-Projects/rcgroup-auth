@@ -12,6 +12,7 @@ import { UserTypeEnum } from '../../auth/enum/user-type.enum';
 import { UserInterface } from '../user.interface';
 import { UserEntity } from '../entity/user.entity';
 import { getUserType } from '../utils/user.util';
+import { CreateUserDto } from '../dto/user-create.dto';
 
 @Injectable()
 export class UserHelperService {
@@ -22,7 +23,7 @@ export class UserHelperService {
     private readonly salesmanService: SalesmanService,
   ) {}
 
-  getUserService(): UserInterface<UserEntity, UserDto> {
+  getUserService(): UserInterface<UserEntity, UserDto, CreateUserDto> {
     console.log({ userType: getUserType() });
     switch (getUserType()) {
       case UserTypeEnum.ADMIN:

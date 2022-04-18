@@ -6,7 +6,10 @@ import {
   IsNotEmptyObject,
   ValidateNested,
   IsDefined,
+  IsPhoneNumber,
+  IsEnum,
 } from 'class-validator';
+import { UserTypeEnum } from '../../auth/enum/user-type.enum';
 import { BaseDto } from '../../dto/base.dto';
 import { AddressDto } from './address.dto';
 export class UserDto extends BaseDto {
@@ -19,6 +22,14 @@ export class UserDto extends BaseDto {
   @IsDefined()
   @IsEmail()
   email: string;
+
+  @IsPhoneNumber('IN')
+  @IsDefined()
+  mobileNumber: string;
+
+  @IsDefined()
+  @IsEnum(UserTypeEnum)
+  userType: UserTypeEnum;
 
   @IsNotEmptyObject()
   @ValidateNested()

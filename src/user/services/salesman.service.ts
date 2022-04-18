@@ -3,12 +3,16 @@ import { UserInterface } from '../user.interface';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { SalesmanEntity } from '../entity/salesman.entity';
 import { FindConditions } from 'typeorm';
+import { CreateSalesmanDto } from '../dto/user-create.dto';
+import { UserTypeEnum } from '../../auth/enum/user-type.enum';
 
 const mockSalesmanDto: SalesmanDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
   fullName: 'Aman Lodha',
   email: 'info@embraystechnologies.com',
   panNumber: 'AAAAA0000A',
+  mobileNumber: '919986273519',
+  userType: UserTypeEnum.STAFF,
   aadhaarNumber: '222222222222',
   bankDetails: {
     id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
@@ -36,8 +40,11 @@ const mockSalesmanDto: SalesmanDto = {
 
 @Injectable()
 export class SalesmanService
-  implements UserInterface<SalesmanEntity, SalesmanDto>
+  implements UserInterface<SalesmanEntity, SalesmanDto, CreateSalesmanDto>
 {
+  createUser(createUser: CreateSalesmanDto): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   getUserByAuthId(authId: string): Promise<SalesmanDto> {
     return Promise.resolve(mockSalesmanDto);
   }

@@ -3,6 +3,7 @@ import { UserHelperService } from './user-helper.service';
 import { Injectable } from '@nestjs/common';
 import { getUserAuthId } from '../utils/user.util';
 import { UserDto } from '../dto/user.dto';
+import { CreateUserDto } from '../dto/user-create.dto';
 
 @Injectable()
 export class UserService {
@@ -25,8 +26,8 @@ export class UserService {
     return this.userHelperService.getUserService().updateUser(user);
   }
 
-  async createUser(user: UserDto): Promise<UserDto> {
+  async createUser(user: CreateUserDto): Promise<void> {
     await validate(Object.create(user), { skipNullProperties: true });
-    return this.userHelperService.getUserService().updateUser(user);
+    return this.userHelperService.getUserService().createUser(user);
   }
 }
