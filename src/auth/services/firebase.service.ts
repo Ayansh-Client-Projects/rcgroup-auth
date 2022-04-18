@@ -26,4 +26,8 @@ export class FirebaseService {
   async invalidateSessionsForUser(uid: string): HandledPromise<void> {
     return handle(Firebase.auth().revokeRefreshTokens(uid));
   }
+
+  async updateEmail(uid: string, email: string): HandledPromise<UserRecord> {
+    return handle(Firebase.auth().updateUser(uid, { email }));
+  }
 }

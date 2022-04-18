@@ -6,14 +6,22 @@ import {
 import { IdDto } from './dto/id.dto';
 import { UserService } from './services/user.service';
 import { UserTypeEnum } from './../auth/enum/user-type.enum';
-import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { UserTypes } from '../decorators/user-types.decorator';
 import { UserTypeGuard } from '../guards/user-type.guard';
 import { EnterpriseService } from './services/enterprise.service';
-import { UserDto } from './user.type';
 import { AuthService } from '../auth/services/auth.service';
 import { SetUserTypeDto } from './dto/set-user-type.dto';
 import { getUserAuthId } from './utils/user.util';
+import { UserDto } from './dto/user.dto';
 
 @Controller('user')
 @UseGuards(UserTypeGuard)
@@ -41,12 +49,23 @@ export class UserController {
     return this.userService.getUserById(idDto.id);
   }
 
-  @Patch('/userType')
+  @Patch('/user-type')
   async setUserType(@Body() setUserTypeDto: SetUserTypeDto): Promise<void> {
     await this.authService.addUserTypeClaim(
       getUserAuthId(),
       setUserTypeDto.userType,
     );
+  }
+
+  @Post('/')
+  @UserTypes(
+    UserTypeEnum.ADMIN,
+    UserTypeEnum.CUSTOMER,
+    UserTypeEnum.SALESMAN,
+    UserTypeEnum.STAFF,
+  )
+  createUser(@Body() user: any): Promise<UserDto> {
+    return this.userService.createUser(user);
   }
 
   @Patch('/')
@@ -56,7 +75,7 @@ export class UserController {
     UserTypeEnum.SALESMAN,
     UserTypeEnum.STAFF,
   )
-  updateUser(@Body() user: UserDto): Promise<UserDto> {
+  updateUser(@Body() user: any): Promise<UserDto> {
     return this.userService.updateUser(user);
   }
 

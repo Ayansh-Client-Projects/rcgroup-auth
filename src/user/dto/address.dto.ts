@@ -1,19 +1,8 @@
+import { BaseDto } from './../../dto/base.dto';
 import { Type } from 'class-transformer';
-import {
-  IsDate,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-  IsUUID,
-  Max,
-  Min,
-} from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
 
-export class AddressDto {
-  @IsNotEmpty()
-  @IsUUID()
-  id: string;
-
+export class AddressDto extends BaseDto {
   @IsNotEmpty()
   @IsString()
   line1: string;
@@ -43,12 +32,4 @@ export class AddressDto {
 
   @IsString()
   landmark?: string;
-
-  @IsNotEmpty()
-  @IsDate()
-  createdAt: Date;
-
-  @IsNotEmpty()
-  @IsDate()
-  updatedAt: Date;
 }

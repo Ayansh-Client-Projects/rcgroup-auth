@@ -1,3 +1,4 @@
+import { UserCommonService } from './services/user-common.service';
 import { AddressBuilder } from './builder/address.builder';
 import { AdminBuilder } from './builder/admin.builder';
 import { BankDetailsRepository } from './repository/bank-details.repository';
@@ -32,6 +33,7 @@ import { StaffRepository } from './repository/staff.repository';
     UserHelperService,
     AdminBuilder,
     AddressBuilder,
+    UserCommonService,
   ],
   imports: [
     TypeOrmModule.forFeature([

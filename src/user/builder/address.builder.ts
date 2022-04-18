@@ -15,8 +15,6 @@ export class AddressBuilder implements Builder<AddressEntity, AddressDto> {
     addressEntity.state = dto.state;
     addressEntity.pincode = dto.pincode;
     addressEntity.country = dto.country;
-    addressEntity.createdAt = dto.createdAt;
-    addressEntity.updatedAt = dto.updatedAt;
     return addressEntity;
   }
   toDto(entity: AddressEntity): AddressDto {

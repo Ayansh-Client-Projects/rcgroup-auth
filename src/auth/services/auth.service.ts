@@ -22,6 +22,10 @@ export class AuthService {
     return this.firebaseService.getUser(uid);
   }
 
+  updateEmail(uid: string, email: string): HandledPromise<UserRecord> {
+    return this.firebaseService.updateEmail(uid, email);
+  }
+
   async addUserTypeClaim(
     uid: string,
     userType: UserTypeEnum,

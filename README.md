@@ -14,6 +14,7 @@
 12. TypeORM category relation https://typeorm.io/#/tree-entities/closure-table
 13. Use strict type in Async Local Storage
 14. Exception Filter for all exceptions
+15. Use IsDefined() wherever required
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>

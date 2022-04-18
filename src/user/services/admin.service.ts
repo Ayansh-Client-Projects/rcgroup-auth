@@ -1,3 +1,6 @@
+import { UserCommonService } from './user-common.service';
+import { UserRecord } from 'firebase-admin/lib/auth/user-record';
+import { getAslValue } from './../../utils/async-local-storage';
 import { AddressBuilder } from './../builder/address.builder';
 import { AdminEntity } from './../entity/admin.entity';
 import { AdminBuilder } from './../builder/admin.builder';
@@ -6,6 +9,7 @@ import { UserInterface } from '../user.interface';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { AdminDto } from '../dto/admin.dto';
 import { FindConditions } from 'typeorm';
+import { Constants } from '../../app.constants';
 
 // const mockAdminDto: AdminDto = {
 //   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
@@ -32,6 +36,7 @@ export class AdminService implements UserInterface<AdminEntity, AdminDto> {
     private readonly adminRepositor: AdminRepository,
     private readonly addressBuilder: AddressBuilder,
     private readonly adminBuilder: AdminBuilder,
+    private readonly userCommonService: UserCommonService,
   ) {}
 
   async getUserByAuthId(authId: string): Promise<AdminDto> {
@@ -48,12 +53,28 @@ export class AdminService implements UserInterface<AdminEntity, AdminDto> {
     const adminEntity = await this.getUser({
       id: adminDto.id,
       addressId: adminDto.address.id,
-    });
+    })
+      // TODO remove this once create user API is created
+      // If this is a new user
+      .catch((err) => {
+        if (err instanceof NotFoundException) {
+          return this.adminBuilder.toEntity(adminDto);
+        } else {
+          throw err;
+        }
+      });
 
     adminEntity.fullName = adminDto.fullName;
     adminEntity.address = this.addressBuilder.toEntity(adminDto.address);
 
     const updatedAdminEntity = await this.adminRepositor.save(adminEntity);
+
+    const firebaseUser: UserRecord = getAslValue(Constants.USER_KEY);
+
+    await this.userCommonService.updateUserEmail(
+      firebaseUser.uid,
+      adminDto.email,
+    );
 
     return this.adminBuilder.toDto(updatedAdminEntity);
   }

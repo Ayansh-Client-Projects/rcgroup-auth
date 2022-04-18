@@ -1,7 +1,8 @@
+import { validate } from 'class-validator';
 import { UserHelperService } from './user-helper.service';
 import { Injectable } from '@nestjs/common';
-import { UserDto } from '../user.type';
 import { getUserAuthId } from '../utils/user.util';
+import { UserDto } from '../dto/user.dto';
 
 @Injectable()
 export class UserService {
@@ -19,7 +20,13 @@ export class UserService {
     return this.userHelperService.getUserService().getUserById(id);
   }
 
-  updateUser(user: UserDto): Promise<UserDto> {
+  async updateUser(user: UserDto): Promise<UserDto> {
+    await validate(Object.create(user), { skipNullProperties: true });
+    return this.userHelperService.getUserService().updateUser(user);
+  }
+
+  async createUser(user: UserDto): Promise<UserDto> {
+    await validate(Object.create(user), { skipNullProperties: true });
     return this.userHelperService.getUserService().updateUser(user);
   }
 }

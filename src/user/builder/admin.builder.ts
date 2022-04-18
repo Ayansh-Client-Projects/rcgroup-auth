@@ -14,8 +14,6 @@ export class AdminBuilder implements Builder<AdminEntity, AdminDto> {
     adminEntity.id = dto.id;
     adminEntity.fullName = dto.fullName;
     adminEntity.address = this.addressBuilder.toEntity(dto.address);
-    adminEntity.createdAt = dto.createdAt;
-    adminEntity.updatedAt = dto.updatedAt;
     return adminEntity;
   }
   toDto(entity: AdminEntity): AdminDto {
