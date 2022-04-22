@@ -3,7 +3,6 @@ import {
   IsNotEmpty,
   IsString,
   IsEmail,
-  IsNotEmptyObject,
   ValidateNested,
   IsDefined,
   IsPhoneNumber,
@@ -14,24 +13,18 @@ import { BaseDto } from '../../dto/base.dto';
 import { AddressDto } from './address.dto';
 export class UserDto extends BaseDto {
   @IsNotEmpty()
-  @IsDefined()
   @IsString()
   fullName: string;
 
-  @IsNotEmpty()
-  @IsDefined()
   @IsEmail()
   email: string;
 
   @IsPhoneNumber('IN')
-  @IsDefined()
-  mobileNumber: string;
+  phoneNumber: string;
 
-  @IsDefined()
   @IsEnum(UserTypeEnum)
   userType: UserTypeEnum;
 
-  @IsNotEmptyObject()
   @ValidateNested()
   @IsDefined()
   @Type(() => AddressDto)

@@ -1,6 +1,13 @@
 import { BaseDto } from './../../dto/base.dto';
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 
 export class AddressDto extends BaseDto {
   @IsNotEmpty()
@@ -31,5 +38,6 @@ export class AddressDto extends BaseDto {
   pincode: number;
 
   @IsString()
+  @IsOptional()
   landmark?: string;
 }

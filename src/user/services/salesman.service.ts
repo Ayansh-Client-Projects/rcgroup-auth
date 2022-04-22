@@ -5,13 +5,14 @@ import { SalesmanEntity } from '../entity/salesman.entity';
 import { FindConditions } from 'typeorm';
 import { CreateSalesmanDto } from '../dto/user-create.dto';
 import { UserTypeEnum } from '../../auth/enum/user-type.enum';
+import { HandledPromise } from '../../utils/handle-promise';
 
 const mockSalesmanDto: SalesmanDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
   fullName: 'Aman Lodha',
   email: 'info@embraystechnologies.com',
   panNumber: 'AAAAA0000A',
-  mobileNumber: '919986273519',
+  phoneNumber: '919986273519',
   userType: UserTypeEnum.STAFF,
   aadhaarNumber: '222222222222',
   bankDetails: {
@@ -40,9 +41,9 @@ const mockSalesmanDto: SalesmanDto = {
 
 @Injectable()
 export class SalesmanService
-  implements UserInterface<SalesmanEntity, SalesmanDto, CreateSalesmanDto>
+  implements UserInterface<SalesmanEntity, SalesmanDto>
 {
-  createUser(createUser: CreateSalesmanDto): Promise<void> {
+  createUser(createUser: CreateSalesmanDto): HandledPromise<SalesmanEntity> {
     throw new Error('Method not implemented.');
   }
   getUserByAuthId(authId: string): Promise<SalesmanDto> {

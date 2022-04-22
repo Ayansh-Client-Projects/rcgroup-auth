@@ -1,3 +1,4 @@
+import { handle, HandledPromise } from './../../utils/handle-promise';
 import { UserCommonService } from './user-common.service';
 import { UserRecord } from 'firebase-admin/lib/auth/user-record';
 import { getAslValue } from './../../utils/async-local-storage';
@@ -6,7 +7,7 @@ import { AdminEntity } from './../entity/admin.entity';
 import { AdminBuilder } from './../builder/admin.builder';
 import { AdminRepository } from './../repository/admin.repository';
 import { UserInterface } from '../user.interface';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { AdminDto } from '../dto/admin.dto';
 import { FindConditions } from 'typeorm';
 import { Constants } from '../../app.constants';
@@ -32,20 +33,25 @@ import { CreateAdminDto } from '../dto/user-create.dto';
 //   updatedAt: new Date(),
 // };
 @Injectable()
-export class AdminService
-  implements UserInterface<AdminEntity, AdminDto, CreateAdminDto>
-{
+export class AdminService implements UserInterface<AdminEntity, AdminDto> {
+  private readonly logger = new Logger(AdminService.name);
+
   constructor(
     private readonly adminRepositor: AdminRepository,
     private readonly addressBuilder: AddressBuilder,
     private readonly adminBuilder: AdminBuilder,
     private readonly userCommonService: UserCommonService,
   ) {}
-  createUser(createUser: CreateAdminDto): Promise<void> {
-    throw new Error('Method not implemented.');
+  async createUser(
+    createAdminDto: CreateAdminDto,
+    authId: string,
+  ): HandledPromise<AdminEntity> {
+    const adminEntity = this.adminBuilder.toEntity(createAdminDto, authId);
+    return handle(this.adminRepositor.save(adminEntity));
   }
 
   async getUserByAuthId(authId: string): Promise<AdminDto> {
+    this.logger.log({ authId });
     const adminEntity = await this.getUser({ authId });
     return this.adminBuilder.toDto(adminEntity);
   }
@@ -59,16 +65,7 @@ export class AdminService
     const adminEntity = await this.getUser({
       id: adminDto.id,
       addressId: adminDto.address.id,
-    })
-      // TODO remove this once create user API is created
-      // If this is a new user
-      .catch((err) => {
-        if (err instanceof NotFoundException) {
-          return this.adminBuilder.toEntity(adminDto);
-        } else {
-          throw err;
-        }
-      });
+    });
 
     adminEntity.fullName = adminDto.fullName;
     adminEntity.address = this.addressBuilder.toEntity(adminDto.address);

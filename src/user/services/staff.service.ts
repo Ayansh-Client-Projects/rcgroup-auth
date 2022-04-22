@@ -1,3 +1,4 @@
+import { HandledPromise } from './../../utils/handle-promise';
 import { StaffDto } from '../dto/staff.dto';
 import { UserInterface } from '../user.interface';
 import { Injectable, NotFoundException } from '@nestjs/common';
@@ -10,7 +11,7 @@ const mockStaffDto: StaffDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
   fullName: 'Aman Lodha',
   email: 'info@embraystechnologies.com',
-  mobileNumber: '919986273519',
+  phoneNumber: '919986273519',
   userType: UserTypeEnum.STAFF,
   panNumber: 'AAAAA0000A',
   aadhaarNumber: '222222222222',
@@ -39,10 +40,8 @@ const mockStaffDto: StaffDto = {
 };
 
 @Injectable()
-export class StaffService
-  implements UserInterface<StaffEntity, StaffDto, CreateStaffDto>
-{
-  createUser(createUser: CreateStaffDto): Promise<void> {
+export class StaffService implements UserInterface<StaffEntity, StaffDto> {
+  createUser(createUser: CreateStaffDto): HandledPromise<StaffEntity> {
     throw new Error('Method not implemented.');
   }
   getUserByAuthId(authId: string): Promise<StaffDto> {

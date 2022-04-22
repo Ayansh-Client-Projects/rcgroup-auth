@@ -6,6 +6,7 @@ import { CompanyTypeEnum } from '../enum/company-type.enum';
 import { CustomerEntity } from '../entity/customer.entity';
 import { FindConditions } from 'typeorm';
 import { UserTypeEnum } from '../../auth/enum/user-type.enum';
+import { HandledPromise } from '../../utils/handle-promise';
 
 const mockCustomerDto: CustomerDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
@@ -14,7 +15,7 @@ const mockCustomerDto: CustomerDto = {
   companyType: CompanyTypeEnum.PRIVATE_LIMITED,
   gstNumber: 'KAAAAAA0000A1Z5',
   aadhaarNumber: '222222222222',
-  mobileNumber: '919986273519',
+  phoneNumber: '919986273519',
   userType: UserTypeEnum.STAFF,
   email: 'aman@embraystechnologies.com',
   address: {
@@ -35,9 +36,9 @@ const mockCustomerDto: CustomerDto = {
 
 @Injectable()
 export class CustomerService
-  implements UserInterface<CustomerEntity, CustomerDto, CreateCustomerDto>
+  implements UserInterface<CustomerEntity, CustomerDto>
 {
-  createUser(createUser: CreateCustomerDto): Promise<void> {
+  createUser(createUser: CreateCustomerDto): HandledPromise<CustomerEntity> {
     throw new Error('Method not implemented.');
   }
   getUserByAuthId(authId: string): Promise<CustomerDto> {

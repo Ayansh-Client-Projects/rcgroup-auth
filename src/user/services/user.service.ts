@@ -1,13 +1,19 @@
+import { AuthService } from './../../auth/services/auth.service';
 import { validate } from 'class-validator';
 import { UserHelperService } from './user-helper.service';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { getUserAuthId } from '../utils/user.util';
 import { UserDto } from '../dto/user.dto';
 import { CreateUserDto } from '../dto/user-create.dto';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userHelperService: UserHelperService) {}
+  private readonly logger = new Logger(UserService.name);
+
+  constructor(
+    private readonly userHelperService: UserHelperService,
+    private readonly authService: AuthService,
+  ) {}
 
   getUser(): Promise<UserDto> {
     return this.getUserByAuthId(getUserAuthId());
@@ -26,8 +32,27 @@ export class UserService {
     return this.userHelperService.getUserService().updateUser(user);
   }
 
-  async createUser(user: CreateUserDto): Promise<void> {
-    await validate(Object.create(user), { skipNullProperties: true });
-    return this.userHelperService.getUserService().createUser(user);
+  async createUser(createUserDto: CreateUserDto): Promise<void> {
+    const authUser = await this.authService.createUser(
+      createUserDto.user.phoneNumber,
+      createUserDto.user.email,
+      createUserDto.user.password,
+      createUserDto.user.userType,
+    );
+
+    if (authUser.error) {
+      throw authUser.error;
+    }
+
+    const { error, data: dbUser } = await this.userHelperService
+      .getUserServiceByUserType(createUserDto.user.userType)
+      .createUser(createUserDto.user, authUser.data.uid);
+
+    if (error) {
+      await this.authService.deleteUser(authUser.data.uid);
+      throw error;
+    }
+
+    this.logger.log({ dbUser });
   }
 }

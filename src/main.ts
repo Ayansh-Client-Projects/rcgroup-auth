@@ -17,6 +17,7 @@ async function bootstrap() {
       transform: true,
       whitelist: true,
       validateCustomDecorators: true,
+      forbidUnknownValues: true,
     }),
   );
 

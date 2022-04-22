@@ -9,7 +9,7 @@ export class UserCommonService {
   constructor(private readonly authService: AuthService) {}
 
   async updateUserEmail(uid: string, email: string): Promise<void> {
-    if (getUserEmail() == email) return;
+    if (getUserEmail() === email) return;
 
     const { data: user, error } = await this.authService.updateEmail(
       uid,

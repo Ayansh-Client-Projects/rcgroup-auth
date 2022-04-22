@@ -30,4 +30,30 @@ export class FirebaseService {
   async updateEmail(uid: string, email: string): HandledPromise<UserRecord> {
     return handle(Firebase.auth().updateUser(uid, { email }));
   }
+
+  async getUserByEmail(email: string): HandledPromise<UserRecord> {
+    return handle(Firebase.auth().getUserByEmail(email));
+  }
+
+  async getUserByPhoneNumber(phoneNumber: string): HandledPromise<UserRecord> {
+    return handle(Firebase.auth().getUserByPhoneNumber(phoneNumber));
+  }
+
+  async deleteUser(uid: string): HandledPromise<void> {
+    return handle(Firebase.auth().deleteUser(uid));
+  }
+
+  async createUser(
+    phoneNumber: string,
+    email: string,
+    password: string,
+  ): HandledPromise<UserRecord> {
+    return handle(
+      Firebase.auth().createUser({
+        email: email,
+        phoneNumber: phoneNumber,
+        password: password,
+      }),
+    );
+  }
 }

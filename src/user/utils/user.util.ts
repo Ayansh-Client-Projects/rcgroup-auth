@@ -12,7 +12,7 @@ export const getUserEmail = (): string => {
   return user.email;
 };
 
-export const getUserMobileNumber = (): string => {
+export const getUserPhoneNumber = (): string => {
   const user: DecodedIdToken = getFirebaseUser();
   if (user.phone_number === undefined) {
     throw new BadRequestException('User does not have email ID set');
