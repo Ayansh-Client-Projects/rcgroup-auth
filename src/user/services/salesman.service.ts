@@ -61,8 +61,6 @@ export class SalesmanService
       throw new NotFoundException();
     }
 
-    // TODO also check if this is the logged in user itself
-
     mockSalesmanDto.aadhaarNumber = salesmanDto.aadhaarNumber;
     mockSalesmanDto.address = salesmanDto.address;
     mockSalesmanDto.bankDetails = salesmanDto.bankDetails;

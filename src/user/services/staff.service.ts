@@ -59,8 +59,6 @@ export class StaffService implements UserInterface<StaffEntity, StaffDto> {
       throw new NotFoundException();
     }
 
-    // TODO also check if this is the logged in user itself
-
     mockStaffDto.aadhaarNumber = staffDto.aadhaarNumber;
     mockStaffDto.address = staffDto.address;
     mockStaffDto.bankDetails = staffDto.bankDetails;
