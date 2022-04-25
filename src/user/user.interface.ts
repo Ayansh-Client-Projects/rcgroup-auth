@@ -1,5 +1,4 @@
 import { FindConditions } from 'typeorm';
-import { HandledPromise } from '../utils/handle-promise';
 import { CreateUserDtoType } from './dto/user-create.dto';
 import { UserDto } from './dto/user.dto';
 import { UserEntity } from './entity/user.entity';
@@ -9,5 +8,5 @@ export interface UserInterface<E extends UserEntity, U extends UserDto> {
   getUserByAuthId(authId: string): Promise<U>;
   getUserById(id: string): Promise<U>;
   updateUser(user: U): Promise<U>;
-  createUser(createUser: CreateUserDtoType, authId: string): HandledPromise<E>;
+  createUser(createUser: CreateUserDtoType, authId: string): Promise<E>;
 }

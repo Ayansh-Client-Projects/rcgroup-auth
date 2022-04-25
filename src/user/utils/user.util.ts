@@ -15,7 +15,7 @@ export const getUserEmail = (): string => {
 export const getUserPhoneNumber = (): string => {
   const user: DecodedIdToken = getFirebaseUser();
   if (user.phone_number === undefined) {
-    throw new BadRequestException('User does not have email ID set');
+    throw new BadRequestException('User does not have phone number set');
   }
   return user.phone_number;
 };
@@ -26,7 +26,11 @@ export const getUserAuthId = (): string => {
 };
 
 export const getUserType = (): UserTypeEnum => {
-  return UserTypeEnum[getAslValue(Constants.USER_KEY)[Constants.USER_TYPE_KEY]];
+  return UserTypeEnum[
+    getAslValue<string, DecodedIdToken>(Constants.USER_KEY)[
+      Constants.USER_TYPE_KEY
+    ]
+  ];
 };
 
 export const getFirebaseUser = (): DecodedIdToken => {

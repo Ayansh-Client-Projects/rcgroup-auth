@@ -6,7 +6,6 @@ import { CompanyTypeEnum } from '../enum/company-type.enum';
 import { CustomerEntity } from '../entity/customer.entity';
 import { FindConditions } from 'typeorm';
 import { UserTypeEnum } from '../../auth/enum/user-type.enum';
-import { HandledPromise } from '../../utils/handle-promise';
 
 const mockCustomerDto: CustomerDto = {
   id: 'bba6ad5b-0477-402c-8a35-54f57d2d7ed4',
@@ -38,7 +37,7 @@ const mockCustomerDto: CustomerDto = {
 export class CustomerService
   implements UserInterface<CustomerEntity, CustomerDto>
 {
-  createUser(createUser: CreateCustomerDto): HandledPromise<CustomerEntity> {
+  createUser(createUser: CreateCustomerDto): Promise<CustomerEntity> {
     throw new Error('Method not implemented.');
   }
   getUserByAuthId(authId: string): Promise<CustomerDto> {

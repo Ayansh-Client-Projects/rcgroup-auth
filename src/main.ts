@@ -8,7 +8,7 @@ import { AppModule } from './app.module';
 import { EnvironmentVariablesEnum } from './config/environment-variables.enum';
 import { HttpExceptionFilter } from './filters/exception.filter';
 
-const logger: Logger = new Logger('Main');
+const logger = new Logger('Main');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

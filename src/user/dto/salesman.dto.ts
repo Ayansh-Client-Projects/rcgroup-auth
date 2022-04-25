@@ -1,23 +1,17 @@
 import { BankDetailsDto } from './bank-details.dto';
 import { Type } from 'class-transformer';
-import {
-  IsNotEmpty,
-  IsNotEmptyObject,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+import { IsDefined, Matches, ValidateNested } from 'class-validator';
 import { UserDto } from './user.dto';
+import { panRegex, aadhaarRegex } from '../user.regex';
 
 export class SalesmanDto extends UserDto {
-  @IsNotEmpty()
-  @IsString()
+  @Matches(panRegex)
   panNumber: string;
 
-  @IsNotEmpty()
-  @IsString()
+  @Matches(aadhaarRegex)
   aadhaarNumber: string;
 
-  @IsNotEmptyObject()
+  @IsDefined()
   @ValidateNested()
   @Type(() => BankDetailsDto)
   bankDetails: BankDetailsDto;

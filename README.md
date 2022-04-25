@@ -15,6 +15,7 @@
 13. Use strict type in Async Local Storage
 14. Exception Filter for all exceptions
 15. Use IsDefined() wherever required
+16. If required ts-mixin (multiple inheritance with decorators)
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>

@@ -60,6 +60,7 @@ export class UserController {
     UserTypeEnum.SALESMAN,
     UserTypeEnum.STAFF,
   )
+  // TODO Make a Update User Dto similar to create user
   updateUser(@Body() user: any): Promise<UserDto> {
     return this.userService.updateUser(user);
   }
@@ -67,7 +68,7 @@ export class UserController {
   @Get('/enterprises')
   @UseGuards(UserTypeGuard)
   @UserTypes(UserTypeEnum.ADMIN, UserTypeEnum.STAFF)
-  getAllEnterprises(): Array<StaffEnterpriseDto> {
+  getAllEnterprises(): StaffEnterpriseDto[] {
     return this.enterpriseService.getAllEnterprises();
   }
 

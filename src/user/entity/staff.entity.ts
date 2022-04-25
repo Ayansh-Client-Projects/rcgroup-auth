@@ -16,6 +16,8 @@ export class StaffEntity extends UserEntity {
   @OneToOne(() => BankDetailsEntity, {
     nullable: false,
     eager: true,
+    cascade: true,
+    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'bank_details_id' })
   bankDetails: BankDetailsEntity;

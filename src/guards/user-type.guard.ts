@@ -1,3 +1,4 @@
+import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
 import { getAslValue } from './../utils/async-local-storage';
 import { Constants } from '../app.constants';
 import { UserTypeEnum } from '../auth/enum/user-type.enum';
@@ -20,10 +21,7 @@ export class UserTypeGuard implements CanActivate {
       executionContext.getHandler(),
     );
     this.logger.log({ allowedUserTypes });
-    if (!allowedUserTypes) {
-      return true;
-    }
-    const user = getAslValue(Constants.USER_KEY);
+    const user = getAslValue<string, DecodedIdToken>(Constants.USER_KEY);
     this.logger.log({ user });
     return (
       user &&

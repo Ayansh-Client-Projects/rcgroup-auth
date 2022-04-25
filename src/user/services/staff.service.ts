@@ -1,4 +1,3 @@
-import { HandledPromise } from './../../utils/handle-promise';
 import { StaffDto } from '../dto/staff.dto';
 import { UserInterface } from '../user.interface';
 import { Injectable, NotFoundException } from '@nestjs/common';
@@ -41,7 +40,7 @@ const mockStaffDto: StaffDto = {
 
 @Injectable()
 export class StaffService implements UserInterface<StaffEntity, StaffDto> {
-  createUser(createUser: CreateStaffDto): HandledPromise<StaffEntity> {
+  createUser(createUser: CreateStaffDto): Promise<StaffEntity> {
     throw new Error('Method not implemented.');
   }
   getUserByAuthId(authId: string): Promise<StaffDto> {

@@ -16,6 +16,7 @@ export abstract class UserEntity extends BaseEntity {
     nullable: false,
     eager: true,
     cascade: true,
+    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'address_id' })
   address: AddressEntity;

@@ -1,6 +1,5 @@
-import { handle, HandledPromise } from './../../utils/handle-promise';
+import { DecodedIdToken } from 'firebase-admin/lib/auth/token-verifier';
 import { UserCommonService } from './user-common.service';
-import { UserRecord } from 'firebase-admin/lib/auth/user-record';
 import { getAslValue } from './../../utils/async-local-storage';
 import { AddressBuilder } from './../builder/address.builder';
 import { AdminEntity } from './../entity/admin.entity';
@@ -45,9 +44,9 @@ export class AdminService implements UserInterface<AdminEntity, AdminDto> {
   async createUser(
     createAdminDto: CreateAdminDto,
     authId: string,
-  ): HandledPromise<AdminEntity> {
+  ): Promise<AdminEntity> {
     const adminEntity = this.adminBuilder.toEntity(createAdminDto, authId);
-    return handle(this.adminRepositor.save(adminEntity));
+    return this.adminRepositor.save(adminEntity);
   }
 
   async getUserByAuthId(authId: string): Promise<AdminDto> {
@@ -72,10 +71,8 @@ export class AdminService implements UserInterface<AdminEntity, AdminDto> {
 
     const updatedAdminEntity = await this.adminRepositor.save(adminEntity);
 
-    const firebaseUser: UserRecord = getAslValue(Constants.USER_KEY);
-
     await this.userCommonService.updateUserEmail(
-      firebaseUser.uid,
+      getAslValue<string, DecodedIdToken>(Constants.USER_KEY).uid,
       adminDto.email,
     );
 

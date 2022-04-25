@@ -2,9 +2,9 @@ import { BankDetailsDto } from './bank-details.dto';
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
+  IsDefined,
   IsEnum,
   IsNotEmpty,
-  IsNotEmptyObject,
   IsString,
   Matches,
   ValidateNested,
@@ -18,22 +18,19 @@ class BaseEnterpriseDto extends BaseDto {
   @IsString()
   companyName: string;
 
-  @IsNotEmpty()
   @IsEnum(CompanyTypeEnum)
   companyType: string;
 
-  @IsNotEmpty()
   @IsBoolean()
   isDefault: boolean;
 }
 
 export class AdminEnterpriseDto extends BaseEnterpriseDto {
-  @IsNotEmptyObject()
+  @IsDefined()
   @ValidateNested()
   @Type(() => BankDetailsDto)
   bankDetails: BankDetailsDto;
 
-  @IsNotEmpty()
   @Matches(gstRegex)
   gstNumber: string;
 }

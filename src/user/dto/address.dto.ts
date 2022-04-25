@@ -30,7 +30,6 @@ export class AddressDto extends BaseDto {
   @IsString()
   country: string;
 
-  @IsNotEmpty()
   @IsNumber()
   @Min(1)
   @Max(999999)

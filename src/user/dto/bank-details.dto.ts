@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, IsDefined } from 'class-validator';
 import { BaseDto } from '../../dto/base.dto';
 
 export class BankDetailsDto extends BaseDto {
@@ -10,7 +10,7 @@ export class BankDetailsDto extends BaseDto {
   @IsString()
   ifscCode: string;
 
-  @IsNotEmpty()
+  @IsDefined()
   @IsNumber()
   accountNumber: number;
 }

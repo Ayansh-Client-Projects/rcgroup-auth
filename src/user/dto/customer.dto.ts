@@ -9,15 +9,12 @@ export class CustomerDto extends UserDto {
   @IsString()
   companyName: string;
 
-  @IsNotEmpty()
   @IsEnum(CompanyTypeEnum)
   companyType: CompanyTypeEnum;
 
-  @IsNotEmpty()
   @Matches(gstRegex)
   gstNumber: string;
 
-  @IsNotEmpty()
   @Matches(aadhaarRegex)
   aadhaarNumber: string;
 }

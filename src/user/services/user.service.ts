@@ -5,6 +5,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { getUserAuthId } from '../utils/user.util';
 import { UserDto } from '../dto/user.dto';
 import { CreateUserDto } from '../dto/user-create.dto';
+import { handle } from '../../utils/handle-promise';
 
 @Injectable()
 export class UserService {
@@ -44,9 +45,11 @@ export class UserService {
       throw authUser.error;
     }
 
-    const { error, data: dbUser } = await this.userHelperService
-      .getUserServiceByUserType(createUserDto.user.userType)
-      .createUser(createUserDto.user, authUser.data.uid);
+    const { error, data: dbUser } = await handle(
+      this.userHelperService
+        .getUserServiceByUserType(createUserDto.user.userType)
+        .createUser(createUserDto.user, authUser.data.uid),
+    );
 
     if (error) {
       await this.authService.deleteUser(authUser.data.uid);

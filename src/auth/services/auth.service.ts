@@ -122,12 +122,11 @@ export class AuthService {
 
     const setCustomClaimsResponse = await this.firebaseService.addCustomClaims(
       firebaseUserResponse.data.uid,
-      {
-        userType,
-      },
+      { userType },
     );
 
     if (setCustomClaimsResponse.error) {
+      await this.deleteUser(firebaseUserResponse.data.uid);
       throw setCustomClaimsResponse.error;
     }
 

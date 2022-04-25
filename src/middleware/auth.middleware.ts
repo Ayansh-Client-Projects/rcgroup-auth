@@ -1,5 +1,6 @@
 import { AuthService } from '../auth/services/auth.service';
 import {
+  BadRequestException,
   Injectable,
   Logger,
   NestMiddleware,
@@ -25,7 +26,7 @@ export class AuthMiddleware implements NestMiddleware {
       const authHeader: string =
         req.headers[Constants.AUTHORIZATION_HEADER_NAME];
       if (!authHeader) {
-        throw new UnauthorizedException('Missing authorization header');
+        throw new BadRequestException('Missing authorization header');
       }
 
       const authTokenSplit = authHeader.split(' ');
